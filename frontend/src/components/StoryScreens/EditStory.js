@@ -31,7 +31,7 @@ const EditStory = () => {
         const getStoryInfo = async () => {
             setLoading(true)
             try {
-                const { data } = await axios.get(`/story/editStory/${slug}`, config)
+                const { data } = await axios.get(`https://sparko.onrender.com/story/editStory/${slug}`, config)
                 setStory(data.data)
                 setTitle(data.data.title)
                 setAge(data.data.age)
@@ -61,7 +61,7 @@ const EditStory = () => {
         formdata.append("previousImage", previousImage)
 
         try {
-            const { data } = await axios.put(`/story/${slug}/edit`, formdata, config)
+            const { data } = await axios.put(`https://sparko.onrender.com/story/${slug}/edit`, formdata, config)
 
             setSuccess('Edit Story successfully ')
 

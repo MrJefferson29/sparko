@@ -45,7 +45,7 @@ const AddStory = () => {
     formdata.append("age", age);
 
     try {
-      const { data } = await axios.post("/story/addstory", formdata, config);
+      const { data } = await axios.post("https://sparko.onrender.com/story/addstory", formdata, config);
       setSuccess("Chi Posted Succesfully, GOOD JOB!");
 
       clearInputs();

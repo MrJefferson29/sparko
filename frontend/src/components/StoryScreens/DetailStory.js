@@ -53,7 +53,7 @@ const DetailStory = () => {
       setLoading(true);
       var activeUser = {};
       try {
-        const { data } = await axios.get("/auth/private", {
+        const { data } = await axios.get("https://sparko.onrender.com/auth/private", {
           headers: {
             "Content-Type": "application/json",
             authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -66,7 +66,7 @@ const DetailStory = () => {
       }
 
       try {
-        const { data } = await axios.post(`/story/${slug}`, { activeUser });
+        const { data } = await axios.post(`https://sparko.onrender.com/story/${slug}`, { activeUser });
         setStory(data.data);
         setLikeStatus(data.likeStatus);
         setLikeCount(data.data.likeCount);
@@ -96,7 +96,7 @@ const DetailStory = () => {
     }, 1500);
 
     try {
-      const { data } = await axios.post(`/story/${slug}/like`, { activeUser }, {
+      const { data } = await axios.post(`https://sparko.onrender.com/story/${slug}/like`, { activeUser }, {
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -136,7 +136,7 @@ const DetailStory = () => {
 
   const addStoryToReadList = async () => {
     try {
-      const { data } = await axios.post(`/user/${slug}/addStoryToReadList`, { activeUser }, {
+      const { data } = await axios.post(`https://sparko.onrender.com/user/${slug}/addStoryToReadList`, { activeUser }, {
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -166,7 +166,7 @@ const DetailStory = () => {
         }
         <div className="slide">
           <img
-            src={`http://localhost:5000/storyImages/${story.image}`}
+            src={`https://sparko.onrender.com/storyImages/${story.image}`}
             alt={story.name}
             className="carousel-img"
           />
