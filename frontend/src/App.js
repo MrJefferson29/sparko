@@ -37,9 +37,7 @@ const App = () => {
 
             <Route path='*' element={<NotFound />} />
 
-            <Route exact path='/' element={<PrivateRoute />}>
               <Route exact path='/' element={<Sc1 />} />
-            </Route>
 
             <Route exact path="/story/:slug" element={<DetailStory />} />
 

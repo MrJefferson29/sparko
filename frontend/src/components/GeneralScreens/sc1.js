@@ -7,33 +7,6 @@ import Sc2 from "./Sc2";
 
 export default function Sc1() {
   const [showMore, setShowMore] = useState(false);
-  const navigate = useNavigate();
-
-  const handleShowMore = () => {
-    setShowMore(!showMore);
-  };
-
-  const categoryMapping = {
-    RIFLES: "Rifles",
-    "AIR GUNS": "Air Guns",
-    SHOTGUNS: "Shotguns",
-    ACCESSORIES: "Accessories",
-    "PISTOL / HANDGUNS": "Pistols",
-    AMMUNITION: "Ammunition",
-    DEACTIVATED: "Deactivated",
-    BLADES: "Blades",
-    "OTHER GUNS": "Other Guns",
-    "GUN DOGS": "Gun Dogs",
-    REPLICA: "Replica",
-    "BOWS & CROSSBOWS": "Bows & Crossbows",
-    WANTED: "Wanted",
-    SERVICES: "Services"
-  };
-
-  const handleProductClick = (productName) => {
-    const categoryName = categoryMapping[productName];
-    navigate(`/all-guns?category=${encodeURIComponent(categoryName)}`);
-  };
 
   return (
     <Styles>
