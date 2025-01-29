@@ -41,7 +41,7 @@ function Footer() {
                 </SocialIcon>
               </SocialIcons>
               <br />
-              <p><b>Louisiana, USA</b></p>
+              <p><b>Soho, UK</b></p>
             </FooterSection>
           </Col>
         </Row>
