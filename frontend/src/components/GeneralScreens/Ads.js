@@ -9,7 +9,7 @@ export default function Ads() {
   const guns = gunsData.slice(0, 6);
 
   const handleCardClick = (formattedName) => {
-    navigate(`/pet/${formattedName}`);
+    navigate(`/all-pets`);
   };
 
   return (

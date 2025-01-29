@@ -39,7 +39,7 @@ const Story = ({ story }) => {
 
                     <p className="story-text"dangerouslySetInnerHTML={{__html : truncateContent( story.content) +"..."}}>
                         </p>
-                    <p className="story-createdAt">€ {story.price} 
+                    <p className="story-createdAt">£ {story.price} 
                     </p>
                 </div>
             </Link>

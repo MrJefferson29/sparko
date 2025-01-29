@@ -179,7 +179,7 @@ const DetailStory = () => {
         <div className="info">
           <div className="info-left">
             <p style={{ fontSize: '20px' }}>
-              <strong style={{ color: "#ff9900" }}>Price:</strong> € {story.price}
+              <strong style={{ color: "#ff9900" }}>Price:</strong> £ {story.price}
             </p>
             <p>
               <strong style={{ color: "#ff9900" }}>Weight:</strong> {story.weight} lbs
