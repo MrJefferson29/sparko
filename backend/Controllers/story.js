@@ -3,43 +3,51 @@ const Story = require("../Models/story");
 const deleteImageFile = require("../Helpers/Libraries/deleteImageFile");
 const {searchHelper, paginateHelper} =require("../Helpers/query/queryHelpers")
 
-const addStory = asyncErrorWrapper(async  (req,res,next)=> {
+const cloudinary = require("cloudinary").v2;
 
-    const {title,content, price, weight, age} = req.body 
+const handleUpload = async (file) => {
+    const res = await cloudinary.uploader.upload(file, {
+        resource_type: "auto",
+    });
+    return res.secure_url;
+};
 
-    var wordCount = content.trim().split(/\s+/).length ; 
-   
-    let readtime = Math.floor(wordCount /200)   ;
+const addStory = async (req, res, next) => {
+    const { title, content, price, weight, age } = req.body;
 
+    if (!req.file) {
+        return res.status(400).json({ error: 'Please upload a file' });
+    }
+
+    const wordCount = content.trim().split(/\s+/).length;
+    const readtime = Math.floor(wordCount / 200);
 
     try {
+        const b64 = Buffer.from(req.file.buffer).toString("base64");
+        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+        const imageUrl = await handleUpload(dataURI);
+
         const newStory = await Story.create({
             title,
             content,
             price,
             weight,
             age,
-            author :req.user._id ,
-            image : req.savedStoryImage,
-            readtime
-        })
+            author: req.user._id,
+            readtime,
+            imageUrl,
+        });
 
         return res.status(200).json({
-            success :true ,
-            message : "add story successfully ",
-            data: newStory
-        })
+            success: true,
+            message: "Story added successfully",
+            data: newStory,
+        });
+    } catch (error) {
+        console.error("Error adding story:", error);
+        return next(error);
     }
-
-    catch(error) {
-
-        deleteImageFile(req)
-
-        return next(error)
-        
-    }
-  
-})
+};
 
 const getAllStories = asyncErrorWrapper( async (req,res,next) =>{
 
@@ -51,7 +59,7 @@ const getAllStories = asyncErrorWrapper( async (req,res,next) =>{
 
     query = paginationResult.query  ;
 
-    query = query.sort("-createdAt")
+    query = query.sort("-likeCount -commentCount -createdAt")
 
     const stories = await query
     
@@ -140,16 +148,17 @@ const editStoryPage  =asyncErrorWrapper(async(req,res,next)=>{
 
 const editStory  =asyncErrorWrapper(async(req,res,next)=>{
     const {slug } = req.params ; 
-    const {title ,content ,image ,previousImage, price, weight } = req.body;
+    const {title ,content ,image ,previousImage, price, weight, age } = req.body;
 
     const story = await Story.findOne({slug : slug })
 
     story.title = title ;
     story.content = content ;
+    story.image =   req.savedStoryImage ;
     story.price = price;
     story.weight = weight;
     story.age = age;
-    story.image =   req.savedStoryImage ;
+
 
     if( !req.savedStoryImage) {
         // if the image is not sent

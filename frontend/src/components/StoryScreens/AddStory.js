@@ -7,58 +7,62 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { AuthContext } from "../../Context/AuthContext";
 import { FiArrowLeft } from "react-icons/fi";
 import { Row, Col } from "react-bootstrap";
-import { AiOutlineUpload } from 'react-icons/ai'
-
+// import b2 from '../../Assets/b2.jpg'
+import { AiOutlineUpload } from 'react-icons/ai';
 import "../../Css/AddStory.css";
 
 const AddStory = () => {
   const { config } = useContext(AuthContext);
+  const imageEl = useRef(null);
   const editorEl = useRef(null);
-  const imageEl = useRef(null)
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
+  const [age, setAge] = useState("");
+  const [file, setFile] = useState("")
   const [weight, setWeight] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [age, setAge] = useState("")
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
   const clearInputs = () => {
     setTitle("");
     setContent("");
-    setWeight("");
     setPrice("");
-    setAge("")
+    setAge("");
+    setWeight("");
     setImage("");
     editorEl.current.editor.setData("");
   };
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formdata = new FormData();
-    formdata.append("title", title);
-    formdata.append("image", image);
-    formdata.append("content", content);
-    formdata.append("price", price);
-    formdata.append("weight", weight);
-    formdata.append("age", age);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const formdata = new FormData();
+  formdata.append("title", title);
+  formdata.append("my_file", file);  // Change 'image' to 'my_file'
+  formdata.append("content", content);
+  formdata.append("price", price);
+  formdata.append("age", age);
+  formdata.append("weight", weight);
+  try {
+    const { data } = await axios.post("https://sparko.onrender.com/story/addstory", formdata, config);
+    setSuccess("Story posted successfully, GOOD JOB!");
 
-    try {
-      const { data } = await axios.post("https://sparko.onrender.com/story/addstory", formdata, config);
-      setSuccess("Chi Posted Succesfully, GOOD JOB!");
+    clearInputs();
+    setTimeout(() => {
+      setSuccess("");
+    }, 7000);
+  } catch (error) {
+    setTimeout(() => {
+      setError("");
+    }, 7000);
+    setError(error.response.data.error);
+  }
+};
 
-      clearInputs();
-      setTimeout(() => {
-        setSuccess("");
-      }, 7000);
-    } catch (error) {
-      setTimeout(() => {
-        setError("");
-      }, 7000);
-      setError(error.response.data.error);
-    }
-  };
   return (
     <div className="Inclusive-addStory-page ">
       <Link to={"/"}>
@@ -82,66 +86,61 @@ const AddStory = () => {
               type="text"
               id="title"
               required
-              placeholder="Pet Name"
+              placeholder="Package name"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               autoFocus={true}
             />
-
             <input
               className="inp"
               type="text"
               required
+              id="age"
+              placeholder="What is the age"
+              onChange={(e) => setAge(e.target.value)}
+              value={age}
+            />
+             <input
+              className="inp"
+              type="text"
+              required
               id="price"
-              placeholder="Input a price in Euro"
+              placeholder="What is the price"
               onChange={(e) => setPrice(e.target.value)}
               value={price}
             />
-             <input
+          </Col>
+          <Col md="6">
+            <input
               className="inp"
               type="text"
-              required
-              id="content"
-              placeholder="Write a little about this pet"
-              onChange={(e) => setContent(e.target.value)}
-              value={content}
-            />
-             <input
-              className="inp"
-              type="text"
-              required
               id="weight"
-              placeholder="Estimate the weight of this pet"
+              placeholder="Package Weight"
               onChange={(e) => setWeight(e.target.value)}
               value={weight}
             />
              <input
               className="inp"
               type="text"
-              required
-              id="age"
-              placeholder="Estimate the age of this pet"
-              onChange={(e) => setAge(e.target.value)}
-              value={age}
+              id="content"
+              placeholder="write a little about the puppy"
+              onChange={(e) => setContent(e.target.value)}
+              value={content}
             />
           </Col>
-          <div class="StoryImageField">
+        </Row>
+        <div className="StoryImageField">
                     <AiOutlineUpload />
-                    <div class="txt">
-                        {image ? image.name :
-                            " Include a high-quality image in your story to make it more inviting to readers."
-                        }
+                    <div className="txt">
+                        {file ? file.name : "Include a high-quality image to make it more inviting to readers."}
                     </div>
                     <input
                         name="image"
                         type="file"
                         ref={imageEl}
-                        onChange={(e) => {
-                            setImage(e.target.files[0])
-                        }}
+                        onChange={handleFileChange} 
                     />
                 </div>
-        </Row>
         <button type="submit" className="addStory-btn">
           Publish{" "}
         </button>

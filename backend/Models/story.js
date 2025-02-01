@@ -11,30 +11,31 @@ const StorySchema = new mongoose.Schema({
         required: true
     },
     slug: String,
+
     title: {
         type: String,
-        required: [true, "Please provide a title"],
-        unique: true,
-        minlength: [4, "Please provide a title least 4 characters "],
+        required: [true, "What is the puppy weight"],
+
     },
+
     content: {
         type: String,
-        required: [true, "Please a provide a content "],
-        minlength: [10, "Please provide a content least 10 characters "],
+        required: [true, "Please write a little about the puppy "],
     },
+
     price: {
         type: String,
-        required: [true, 'Inpu a price in Euro'],
+        required: [true, "Please a provide the price "],
     },
     weight: {
         type: String,
-        default: 'Undefined'
+        required: [true, "Please a provide the weight"],
     },
     age: {
         type: String,
-        degfault: '10 weeks'
+        required: [true, "Please a provide the age"],
     },
-    image: {
+    imageUrl: {
         type: String,
         default: "default.jpg"
     },
@@ -51,8 +52,8 @@ const StorySchema = new mongoose.Schema({
         default: 0
     },
     comments: [{
-            type: mongoose.Schema.ObjectId,
-            ref: "Comment"
+        type: mongoose.Schema.ObjectId,
+        ref: "Comment"
     }],
     commentCount: {
         type: Number,
@@ -62,7 +63,7 @@ const StorySchema = new mongoose.Schema({
 
 }, { timestamps: true })
 
-StorySchema.pre("save",  function (next) {
+StorySchema.pre("save", function (next) {
 
     if (!this.isModified("title")) {
         next();
@@ -77,10 +78,10 @@ StorySchema.pre("save",  function (next) {
 
 StorySchema.pre("remove", async function (next) {
 
-    const story= await Story.findById(this._id)
+    const story = await Story.findById(this._id)
 
     await Comment.deleteMany({
-        story : story 
+        story: story
     })
 
 })

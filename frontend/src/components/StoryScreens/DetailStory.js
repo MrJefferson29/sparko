@@ -115,7 +115,7 @@ const DetailStory = () => {
   const handleDelete = async () => {
     if (window.confirm("Do you want to delete this post")) {
       try {
-        await axios.delete(`/story/${slug}/delete`, {
+        await axios.delete(`https://sparko.onrender.com/story/${slug}/delete`, {
           headers: {
             "Content-Type": "application/json",
             authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -166,7 +166,7 @@ const DetailStory = () => {
         }
         <div className="slide">
           <img
-            src={`https://sparko.onrender.com/storyImages/${story.image}`}
+            src={story.imageUrl}
             alt={story.name}
             className="carousel-img"
           />
