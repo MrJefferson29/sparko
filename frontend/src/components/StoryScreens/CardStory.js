@@ -36,7 +36,7 @@ const Story = ({ story }) => {
             dangerouslySetInnerHTML={{ __html: truncateContent(story.content) + "..." }}
           />
           <div className="story-footer">
-            <p className="story-createdAt">£ {story.price}</p>
+            <p className="story-createdAt">$ {story.price}</p>
             <button className="get-me-now-button">Get me now</button>
           </div>
         </div>
