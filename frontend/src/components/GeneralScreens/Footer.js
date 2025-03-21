@@ -10,7 +10,7 @@ function Footer() {
         <Row>
           <Col md={4}>
             <FooterSection>
-              <FooterLogo>French Bulldog Kennel UK</FooterLogo>
+              <FooterLogo>French Bulldog Kennel US</FooterLogo>
               <FooterDescription>
                 Quality bred French Bulldogs pupps, ready to find a place in your home, and in your heart
                 contact us, or visit our store to know more about us.
