@@ -153,7 +153,7 @@ const Health = () => {
       </Section>
 
       <Footer>
-        <p>&copy; French Bulldog Kennel UK. All rights reserved.</p>
+        <p>&copy; French Bulldog Kennel US. All rights reserved.</p>
       </Footer>
     </Container>
   );
