@@ -41,13 +41,13 @@ function Footer() {
                 </SocialIcon>
               </SocialIcons>
               <br />
-              <p><b>Soho, UK</b></p>
+              <p><b>Tampa, FL</b></p>
             </FooterSection>
           </Col>
         </Row>
       </Container>
       <FooterBottom>
-        <p>&copy; 2024 French Bulldog Kennel UK</p>
+        <p>&copy; 2024 French Bulldog Kennel US</p>
       </FooterBottom>
     </FooterContainer>
   );
