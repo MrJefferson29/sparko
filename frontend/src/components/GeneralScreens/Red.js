@@ -21,7 +21,7 @@ const Red = () => {
       <Content>
         <Heading>French Bulldog Kennel</Heading>
         <Subheading>We Love Puppies, Just as You Do!</Subheading>
-        <Text>Welcome to French Bulldog Kennel US</Text>
+        <Text>Welcome to French Bulldog Kennel UK</Text>
 
         <ButtonContainer>
           <StyledButton onClick={handleRegister}>Visit Store</StyledButton>
