@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="privacy-policy">
       <h1>Privacy Policy</h1>
-      <p>Last updated: 21st May 2024</p>
+      <p>Last updated: 21st May 2025</p>
       
       <section>
         <h2>Introduction</h2>
@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
           Best Online Guns Store is part of Friday Media Group Ltd and is a classified ads marketplace established to accurately match item sellers and service providers with a relevant buying audience.
         </p>
         <p>
-          When you submit information to Best Online Guns Store, your information will also be shared with other relevant marketplace sites that form part of the Friday Media Group portfolio. Any such sites will also use your information in accordance with this Privacy Policy. Best Online Guns Store will remain responsible for the management and security of jointly used Personal Information that you submit to Best Online Guns Store.
+          When you submit information to Best Online Guns Store, your information will also be shared with other relevant marketplace sites that form part of the Friday Media Group portfolio. Any such sites will also use your information in accordance with this Privacy Policy. Best Online Guns Store will remain responsible for the management and security of jointly used Personal Information that you submit to the Store.
         </p>
       </section>
 
