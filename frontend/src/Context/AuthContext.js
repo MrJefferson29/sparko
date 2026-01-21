@@ -3,37 +3,43 @@ import axios from "axios";
 
 export const AuthContext = React.createContext();
 
-const AuthContextProvider = props => {
-
-  const [activeUser, setActiveUser] = useState({})
+const AuthContextProvider = (props) => {
+  const [activeUser, setActiveUser] = useState({});
   const [config, setConfig] = useState({
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${localStorage.getItem("authToken")}`,
     },
-  })
-
+  });
 
   useEffect(() => {
-
     const controlAuth = async () => {
-      try {
-        const { data } = await axios.get("https://sparko.onrender.com/auth/private", config);
-        setActiveUser(data.user)
+      // If there is no token, don't make the API call and reset user
+      const token = localStorage.getItem("authToken");
+      if (!token) {
+        setActiveUser({});
+        return;
       }
-      catch (error) {
 
+      try {
+        const { data } = await axios.get(
+          "https://sparko.onrender.com/auth/private",
+          config
+        );
+        setActiveUser(data.user);
+      } catch (error) {
         localStorage.removeItem("authToken");
-
-        setActiveUser({})
+        setActiveUser({});
       }
     };
-    controlAuth()
 
-  }, [])
+    controlAuth();
+  }, [config]); // config added to dependency array to satisfy the linter
 
   return (
-    <AuthContext.Provider value={{ activeUser, setActiveUser, config, setConfig }}>
+    <AuthContext.Provider
+      value={{ activeUser, setActiveUser, config, setConfig }}
+    >
       {props.children}
     </AuthContext.Provider>
   );
