@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 export const AuthContext = React.createContext();
 
 const AuthContextProvider = (props) => {
   const [activeUser, setActiveUser] = useState({});
+  // We keep config in state so you can still export it to other components
   const [config, setConfig] = useState({
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +15,6 @@ const AuthContextProvider = (props) => {
 
   useEffect(() => {
     const controlAuth = async () => {
-      // If there is no token, don't make the API call and reset user
       const token = localStorage.getItem("authToken");
       if (!token) {
         setActiveUser({});
@@ -22,10 +22,13 @@ const AuthContextProvider = (props) => {
       }
 
       try {
-        const { data } = await axios.get(
-          "https://sparko.onrender.com/auth/private",
-          config
-        );
+        // We define the headers directly here to avoid the dependency error
+        const { data } = await axios.get("https://sparko.onrender.com/auth/private", {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+        });
         setActiveUser(data.user);
       } catch (error) {
         localStorage.removeItem("authToken");
@@ -34,12 +37,10 @@ const AuthContextProvider = (props) => {
     };
 
     controlAuth();
-  }, [config]); // config added to dependency array to satisfy the linter
+  }, []); // Empty array is now safe because we don't rely on external state variables
 
   return (
-    <AuthContext.Provider
-      value={{ activeUser, setActiveUser, config, setConfig }}
-    >
+    <AuthContext.Provider value={{ activeUser, setActiveUser, config, setConfig }}>
       {props.children}
     </AuthContext.Provider>
   );
