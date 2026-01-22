@@ -20,7 +20,7 @@ export default function Sc1() {
               her. she is a quiet one, although she is full of energy and is
               always excited to play or have a good time with almost anyone.
             </p>
-            <div className="ad-price">$ 800</div>
+            <div className="ad-price">£ 800</div>
           </div>
         </div>
       </section>
