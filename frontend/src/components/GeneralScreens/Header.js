@@ -41,7 +41,7 @@ export default function Header() {
           <img src={logo} alt="Logo" className="logo-image" />
           <div className="logo-text">
             <span className="text-bold" style={{fontSize: '1.2rem', fontWeight: '700', color: 'black', width: '10rem'}}>French Bulldog</span>
-            <span className="second" style={{fontWeight: '800', color: 'black'}}>Kennel US</span>
+            <span className="second" style={{fontWeight: '800', color: 'black'}}>Kennel UK</span>
           </div>
         </Link>
         {!isMobile && ( // Render links only on larger screens
